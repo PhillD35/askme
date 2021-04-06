@@ -32,6 +32,7 @@ class User < ApplicationRecord
             :presence => true,
             :on => :create
 
+  before_validation :downcase_username
   before_save :encrypt_password
 
   def to_s
@@ -39,6 +40,10 @@ class User < ApplicationRecord
       .attributes
       .map { |attr|  "#{attr[0].ljust(13)} : #{attr[1]}" }
       .join("\n")
+  end
+
+  def downcase_username
+    self.username.downcase!
   end
 
   def encrypt_password

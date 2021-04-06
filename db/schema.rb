@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_02_072310) do
+ActiveRecord::Schema.define(version: 2021_04_06_093432) do
 
   create_table "questions", force: :cascade do |t|
-    t.string "text"
+    t.string "text", null: false
     t.string "answer"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -23,13 +23,14 @@ ActiveRecord::Schema.define(version: 2021_04_02_072310) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "username"
+    t.string "username", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "email"
-    t.string "password_hash"
-    t.string "password_salt"
+    t.string "email", null: false
+    t.string "password_hash", null: false
+    t.string "password_salt", null: false
     t.string "avatar_url"
+    t.index ["username", "email"], name: "index_users_on_username_and_email", unique: true
   end
 
   add_foreign_key "questions", "users"

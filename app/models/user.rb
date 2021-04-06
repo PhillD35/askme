@@ -6,7 +6,7 @@ class User < ApplicationRecord
   ITERATIONS = 20000
   DIGEST = OpenSSL::Digest::SHA256.new
 
-  USERNAME_FORMAT = /\A[a-z0-9_]+\z/
+  USERNAME_FORMAT = /\A[A-Za-z0-9_]+\z/
   USERNAME_MAX_LENGTH = 40
 
   EMAIL_FORMAT = /\A.+@.+\..+\z/
@@ -14,33 +14,25 @@ class User < ApplicationRecord
   has_many :questions
 
   validates :email, :username,
-            :presence => true,
-            :uniqueness => { case_sensitive: false }
+            presence: true,
+            uniqueness: { case_sensitive: false }
 
   validates :username,
-            :format => { with: USERNAME_FORMAT },
-            :length => { maximum: USERNAME_MAX_LENGTH }
+            format: { with: USERNAME_FORMAT },
+            length: { maximum: USERNAME_MAX_LENGTH }
 
   validates :email, format: { with: EMAIL_FORMAT }
 
   validates :password,
-            :presence => true,
-            :confirmation => true,
-            :on => :create
+            presence: true,
+            confirmation: true,
+            on: :create
 
   validates :password_confirmation,
-            :presence => true,
-            :on => :create
+            presence: true,
+            on: :create
 
-  before_validation :downcase_username
-  before_save :encrypt_password
-
-  def to_s
-    self
-      .attributes
-      .map { |attr|  "#{attr[0].ljust(13)} : #{attr[1]}" }
-      .join("\n")
-  end
+  before_save :encrypt_password, :downcase_username
 
   def downcase_username
     self.username.downcase!

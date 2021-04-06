@@ -4,6 +4,6 @@ class Question < ApplicationRecord
   belongs_to :user
 
   validates :text,
-            :presence => true,
-            :length => { maximum: TEXT_MAX_LENGTH }
+            presence: true,
+            length: { maximum: TEXT_MAX_LENGTH }
 end

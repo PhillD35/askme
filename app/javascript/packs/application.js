@@ -7,5 +7,7 @@ import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+require("packs/custom")
+
 Rails.start()
 ActiveStorage.start()

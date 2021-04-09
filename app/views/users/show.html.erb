@@ -36,6 +36,18 @@
 </div>
 
 <div class="column-3-4">
+  <div class="user-questions buffer-both container">
+    <div class="text-center buffer-both column-1-3 text-bolder">
+      <%= questions_total(@questions) %>
+    </div>
+    <div class="text-center buffer-both column-1-3 text-bolder">
+      <%= questions_answered(@questions) %>
+    </div>
+    <div class="text-center buffer-both column-1-3 text-bolder">
+      <%= questions_unanswered(@questions) %>
+    </div>
+  </div>
+
   <div class="user-questions buffer-both">
     <div class="questions-list">
       <% @questions.each do |question| %>

@@ -23,6 +23,10 @@ a {
   margin-bottom: 6px;
 }
 
+.text-bolder {
+  font-weight: bolder;
+}
+
 .text-lead {
   font-size: 20px;
   line-height: 28px;

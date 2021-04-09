@@ -6,4 +6,8 @@ class Question < ApplicationRecord
   validates :text,
             presence: true,
             length: { maximum: TEXT_MAX_LENGTH }
+
+  def answered?
+    self.answer.present?
+  end
 end

@@ -1,37 +1,62 @@
 class UsersController < ApplicationController
+  before_action :load_user, except: %i(index create new)
+  before_action :redirect_current_user, only: %i(new create)
+  before_action :authorize_user, only: %i(edit update)
+
   def index
-    @users = [
-      User.new(
-        id: 1,
-        name: 'Jay',
-        username: 'Mega-pihar',
-        avatar_url: 'https://www.fillmurray.com/100/100'
-      ),
-      User.new(
-        id: 2,
-        name: 'Robert',
-        username: 'silent_bob'
-      )
-    ]
+    @users = User.all
   end
 
   def new
+    @user = User.new
   end
 
   def edit
   end
 
   def show
-    @user = User.new(
-      name: 'David',
-      username: 'phill'
-    )
+    @questions = @user.sorted_questions
 
-    @questions = [
-      Question.new(text: 'Who are you?', created_at: '2021-04-08 11:16:00'),
-      Question.new(text: 'None of your business!', created_at: '2021-04-08 11:50:00')
-    ]
+    @new_question = @user.new_question
+  end
 
-    @new_question = Question.new
+  def create
+    @user = User.new(user_params)
+
+    if @user.save
+      redirect_to root_url, notice: 'Успех! Пользователь зарегисрирован.'
+    else
+      render 'new'
+    end
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'Успех! Данные обновлены.'
+    else
+      render 'edit'
+    end
+  end
+
+  private
+
+  def authorize_user
+    reject_user unless @user == current_user
+  end
+
+  def load_user
+    @user = User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:email,
+                                 :username,
+                                 :name,
+                                 :password,
+                                 :password_confirmation)
+  end
+
+  def redirect_current_user
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user
   end
 end

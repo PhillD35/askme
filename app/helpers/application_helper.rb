@@ -15,6 +15,10 @@ module ApplicationHelper
     "https://via.placeholder.com/150.png/ddd/111?text=@#{user.username.capitalize}"
   end
 
+  def fa_icon(icon_class)
+    content_tag 'span', '', class: "fa fa-#{icon_class}"
+  end
+
   def user_avatar(user)
     user.avatar_url.present? ? user.avatar_url : default_avatar(user)
   end

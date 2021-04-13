@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   # get '/show', to: 'users#show'
 
   resources :users, except: :destroy
-  resources :questions
+
   resources :sessions, only: %i(new create destroy)
+  resources :questions, except: %i(show new index)
 
   get 'log_in' => 'sessions#new'
   get 'log_out' => 'sessions#destroy'

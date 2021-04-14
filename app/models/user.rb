@@ -80,4 +80,16 @@ class User < ApplicationRecord
   def sorted_questions
     self.questions.order(created_at: :desc)
   end
+
+  def questions_amount_answered
+    self.questions.where.not(answer: nil).count
+  end
+
+  def questions_amount_total
+    self.questions.count
+  end
+
+  def questions_amount_unanswered
+    self.questions.where(answer: nil).count
+  end
 end

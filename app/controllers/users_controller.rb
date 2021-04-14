@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to root_url, notice: 'Успех! Пользователь зарегисрирован.'
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to user_path(@user), notice: 'Успех! Данные обновлены.'
     else
-      render 'edit'
+      render :edit
     end
   end
 
@@ -53,7 +53,8 @@ class UsersController < ApplicationController
                                  :username,
                                  :name,
                                  :password,
-                                 :password_confirmation)
+                                 :password_confirmation,
+                                 :avatar_url)
   end
 
   def redirect_current_user

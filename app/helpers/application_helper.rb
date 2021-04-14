@@ -23,24 +23,19 @@ module ApplicationHelper
     user.avatar_url.present? ? user.avatar_url : default_avatar(user)
   end
 
-  def questions_answered(questions)
-    number_of_questions = questions.select(&:answered?).count
-    correct_word_form = case_adjuster(number_of_questions, *QUESTION_WORD_FORMS)
-
-    "на #{number_of_questions} #{correct_word_form} отвечено"
+  def questions_correct_form(number)
+    "#{number} #{case_adjuster(number, *QUESTION_WORD_FORMS)}"
   end
 
-  def questions_total(questions)
-    number_of_questions = questions.count
-    correct_word_form = case_adjuster(number_of_questions, *QUESTION_WORD_FORMS)
-
-    "#{number_of_questions} #{correct_word_form} задано"
+  def questions_answered(user)
+    "на #{questions_correct_form(user.questions_amount_answered)} отвечено"
   end
 
-  def questions_unanswered(questions)
-    number_of_questions = questions.reject(&:answered?).count
-    correct_word_form = case_adjuster(number_of_questions, *QUESTION_WORD_FORMS)
+  def questions_total(user)
+    "#{questions_correct_form(user.questions_amount_total)} задано"
+  end
 
-    "#{number_of_questions} #{correct_word_form} без ответа"
+  def questions_unanswered(user)
+    "#{questions_correct_form(user.questions_amount_unanswered)} без ответа"
   end
 end

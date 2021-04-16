@@ -18,6 +18,10 @@ class UsersController < ApplicationController
     @questions = @user.sorted_questions
 
     @new_question = @user.new_question
+
+    @questions_total = @user.questions_amount_total
+    @questions_answered = @user.questions_amount_answered
+    @questions_unanswered = @user.questions_amount_unanswered
   end
 
   def create

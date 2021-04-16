@@ -27,15 +27,15 @@ module ApplicationHelper
     "#{number} #{case_adjuster(number, *QUESTION_WORD_FORMS)}"
   end
 
-  def questions_answered(user)
-    "на #{questions_correct_form(user.questions_amount_answered)} отвечено"
+  def questions_answered(number)
+    "на #{questions_correct_form(number)} отвечено"
   end
 
-  def questions_total(user)
-    "#{questions_correct_form(user.questions_amount_total)} задано"
+  def questions_total(number)
+    "#{questions_correct_form(number)} задано"
   end
 
-  def questions_unanswered(user)
-    "#{questions_correct_form(user.questions_amount_unanswered)} без ответа"
+  def questions_unanswered(number)
+    "#{questions_correct_form(number)} без ответа"
   end
 end

@@ -28,6 +28,11 @@
         <%= field.text_field :avatar_url, class: 'form-text-field' %>
       </div>
 
+      <div class="form-field">
+        <%= field.label 'Цвет фона', class: 'form-label' %>
+        <%= field.color_field :background_color, class: 'form-color-field' %>
+      </div>
+
       <div class="buffer-top-large buffer-bottom">
         Если не хотите менять пароль — оставьте эти поля пустыми!
       </div>

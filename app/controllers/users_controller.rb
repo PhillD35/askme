@@ -60,7 +60,8 @@ class UsersController < ApplicationController
                                  :name,
                                  :password,
                                  :password_confirmation,
-                                 :avatar_url)
+                                 :avatar_url,
+                                 :background_color)
   end
 
   def redirect_current_user

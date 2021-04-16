@@ -11,9 +11,16 @@ class User < ApplicationRecord
 
   EMAIL_FORMAT = /\A.+@.+\..+\z/
 
+  BG_COLOR_FORMAT = /\A#[\da-f]{3}{1,2}\z/
+
   has_many :questions
 
-  validates_with AvatarFormatValidator
+  validates_with AvatarFormatValidator, on: :update
+
+  validates :background_color,
+            presence: true,
+            format: { with: BG_COLOR_FORMAT },
+            on: :update
 
   validates :email, :username,
             presence: true,

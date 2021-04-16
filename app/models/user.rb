@@ -6,6 +6,8 @@ class User < ApplicationRecord
   ITERATIONS = 20000
   DIGEST = OpenSSL::Digest::SHA256.new
 
+  URL_SCHEMES = %w[http https]
+
   USERNAME_FORMAT = /\A[A-Za-z0-9_]+\z/
   USERNAME_MAX_LENGTH = 40
 
@@ -32,7 +34,7 @@ class User < ApplicationRecord
             presence: true,
             on: :create
 
-  before_save :encrypt_password, :downcase_username
+  before_save :encrypt_password, :downcase_attributes, :normalize_avatar_url
 
   def self.authenticate(email, password)
     user = find_by(email: email)
@@ -59,7 +61,8 @@ class User < ApplicationRecord
     password_hash.unpack('H*')[0]
   end
 
-  def downcase_username
+  def downcase_attributes
+    self.email.downcase!
     self.username.downcase!
   end
 
@@ -75,6 +78,12 @@ class User < ApplicationRecord
 
   def new_question
     self.questions.build
+  end
+
+  def normalize_avatar_url
+    return if self.avatar_url.start_with?(*URL_SCHEMES) || self.avatar_url.empty?
+
+    self.avatar_url.prepend('https://')
   end
 
   def sorted_questions

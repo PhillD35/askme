@@ -34,7 +34,8 @@ class User < ApplicationRecord
             presence: true,
             on: :create
 
-  before_save :encrypt_password, :downcase_attributes, :normalize_avatar_url
+  before_update :normalize_avatar_url
+  before_save :encrypt_password, :downcase_attributes
 
   def self.authenticate(email, password)
     user = find_by(email: email)

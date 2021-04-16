@@ -6,8 +6,6 @@ class User < ApplicationRecord
   ITERATIONS = 20000
   DIGEST = OpenSSL::Digest::SHA256.new
 
-  URL_SCHEMES = %w[http https]
-
   USERNAME_FORMAT = /\A[A-Za-z0-9_]+\z/
   USERNAME_MAX_LENGTH = 40
 
@@ -15,15 +13,17 @@ class User < ApplicationRecord
 
   has_many :questions
 
+  validates_with AvatarFormatValidator
+
   validates :email, :username,
             presence: true,
             uniqueness: { case_sensitive: false }
 
+  validates :email, format: { with: EMAIL_FORMAT }
+
   validates :username,
             format: { with: USERNAME_FORMAT },
             length: { maximum: USERNAME_MAX_LENGTH }
-
-  validates :email, format: { with: EMAIL_FORMAT }
 
   validates :password,
             presence: true,
@@ -34,7 +34,6 @@ class User < ApplicationRecord
             presence: true,
             on: :create
 
-  before_update :normalize_avatar_url
   before_save :encrypt_password, :downcase_attributes
 
   def self.authenticate(email, password)
@@ -79,12 +78,6 @@ class User < ApplicationRecord
 
   def new_question
     self.questions.build
-  end
-
-  def normalize_avatar_url
-    return if self.avatar_url.start_with?(*URL_SCHEMES) || self.avatar_url.empty?
-
-    self.avatar_url.prepend('https://')
   end
 
   def sorted_questions

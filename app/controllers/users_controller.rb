@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :load_user, except: %i(index create new)
   before_action :redirect_current_user, only: %i(new create)
-  before_action :restrict_access, only: %i(edit update)
+  before_action :restrict_access, only: %i(edit update destroy)
 
   def index
     @users = User.all
@@ -34,6 +34,12 @@ class UsersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def destroy
+    @user.destroy
+
+    redirect_to root_url, notice: 'Пользователь удалён :( Возвращайтесь скорей!'
   end
 
   def update

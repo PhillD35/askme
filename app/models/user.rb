@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   BG_COLOR_FORMAT = /\A#[\da-f]{3}{1,2}\z/
 
-  has_many :questions
+  has_many :questions, dependent: :delete_all
 
   validates_with AvatarFormatValidator, on: :update
 

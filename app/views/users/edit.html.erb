@@ -50,6 +50,18 @@
       <div class="form-action buffer-top">
         <%= field.submit 'Сохранить', class: 'button button-dark button-small' %>
       </div>
+
+      <div class="buffer-top-large buffer-bottom">
+        Осторожно! Восстановление пользователя невозможно!
+      </div>
+
+      <div>
+        <%= link_to 'Удалить пользователя',
+                    user_path(@user),
+                    method: :delete,
+                    data: {confirm: 'Точно удалить? Мы будем очень-очень скучать!'},
+                    class: 'button button-red' %>
+      </div>
     <% end %>
   </div>
 </div>

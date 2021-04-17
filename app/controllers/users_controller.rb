@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :load_user, except: %i(index create new)
   before_action :redirect_current_user, only: %i(new create)
-  before_action :authorize_user, only: %i(edit update)
+  before_action :restrict_access, only: %i(edit update)
 
   def index
     @users = User.all
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      session[:user_id] = @user.id
+      authorize_user(@user.id)
 
       redirect_to root_url, notice: 'Успех! Пользователь зарегисрирован.'
     else
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
   private
 
-  def authorize_user
+  def restrict_access
     reject_user unless @user == current_user
   end
 

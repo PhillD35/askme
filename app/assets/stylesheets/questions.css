@@ -26,6 +26,13 @@
 .question-answer {
 }
 
+.question-author {
+  padding: 10px 15px;
+  border-top: 1px solid #D9E6E5;
+  margin-right: 10px;
+
+}
+
 .question-date {
   color: #a0a0a0;
   font-size: 12px;

@@ -15,13 +15,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @questions = @user.sorted_questions
+    @questions = @user.questions.sorted
 
-    @new_question = @user.new_question
+    @new_question = @user.questions.build
 
-    @questions_total = @user.questions_amount_total
-    @questions_answered = @user.questions_amount_answered
-    @questions_unanswered = @user.questions_amount_unanswered
+    @questions_total = @questions.count
+    @questions_answered = @questions.answered.count
+    @questions_unanswered = @questions.unanswered.count
   end
 
   def create

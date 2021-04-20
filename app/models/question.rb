@@ -2,15 +2,11 @@ class Question < ApplicationRecord
   TEXT_MAX_LENGTH = 255
 
   belongs_to :user
-  belongs_to :author,
-             class_name: 'User',
-             optional: true
+  belongs_to :author, class_name: 'User', optional: true
 
-  validates :text,
-            presence: true,
-            length: { maximum: TEXT_MAX_LENGTH }
+  validates :text, presence: true, length: { maximum: TEXT_MAX_LENGTH }
 
-  def author_name
-    self.author&.username
-  end
+  scope :sorted, -> { order(created_at: :desc) }
+  scope :answered, -> { where.not(answer: nil) }
+  scope :unanswered, -> { where(answer: nil) }
 end

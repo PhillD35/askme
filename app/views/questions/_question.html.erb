@@ -15,14 +15,16 @@
     </div>
   </div>
 
-  <div class="container inline">
-    <div class="column-1-2 buffer-top">
+  <div class="container">
+    <div class="column-1-2 buffer-both-small">
       <% if question.author %>
-        <%= link_to "@#{question.author_name}", user_path(question.author), class: 'text-bolder text-small buffer-left' %>
+        <%= link_to "@#{question.author.username}", user_path(question.author), class: 'question-author text-small' %>
+      <% else %>
+        <span class="question-author text-small">Анонимус</span>
       <% end %>
     </div>
 
-    <div class="column-1-2 buffer-top">
+    <div class="column-1-2 buffer-both-small">
       <% if question.user == current_user %>
         <% edit_icon = question.answer.blank? ? 'reply' : 'pencil' %>
 
